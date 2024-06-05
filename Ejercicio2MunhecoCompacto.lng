@@ -1,0 +1,20 @@
+SETS:
+  PRODUCTO/1,2/:beneficio,X;
+  ACTIVIDADES/1,2/:disponibilidad;
+  PA(PRODUCTO,ACTIVIDADES):requerimiento;
+ENDSETS
+
+DATA:
+  beneficio = 3 2;
+  disponibilidad = 100 80;
+  requerimiento = 
+    2 1 
+    1 1;
+ENDDATA
+
+MAX = @SUM(PRODUCTO(i): beneficio(i)*X(i));
+
+@FOR(ACTIVIDADES(j): @SUM(PRODUCTO(i): requerimiento(i,j)*X(i)) <= disponibilidad(j));
+[demanda_mu] X(1) <= 40;
+
+END

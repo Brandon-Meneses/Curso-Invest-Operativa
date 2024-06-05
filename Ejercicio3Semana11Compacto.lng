@@ -1,0 +1,16 @@
+SETS:
+PROGRAMAS/1,2/:costo,X;
+PERSONAS/1,2/:vistos;
+PP(programas,personas):requerimiento;
+endsets
+
+data:
+Costo= 50000 100000;
+Vistos= 24 30;
+Requerimiento= 	 6 2 
+		 8 3;
+enddata
+
+min = @sum(programas(i):costo(i)*x(i));
+
+@for(personas(j):@sum(programas(i):requerimiento(i,j)*x(i))<=vistos(j));

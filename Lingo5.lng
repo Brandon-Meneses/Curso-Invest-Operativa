@@ -1,0 +1,8 @@
+max = 8*x1+5*x2;
+
+x1=2*x2;
+[total_dia] x1+x2 <=400;
+[limite_merc1] x1<= 120;
+[limite_merc2] x2<= 200;
+
+end

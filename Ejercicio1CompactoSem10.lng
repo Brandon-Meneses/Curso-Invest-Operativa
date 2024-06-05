@@ -1,0 +1,17 @@
+SETS:
+CARTERAS/1,2/:PV,X;
+DEPARTAMENTO/1..3/:disponibilidad;
+CD(CARTERAS,DEPARTAMENTO):consumo;
+endsets
+
+data:
+PV = 20 15;
+disponibilidad = 750 600 350;
+consumo = 0.5 1.5 1 0.5 0.5 0.5;
+enddata
+
+max = @sum(CARTERAS(i):PV(i)*X(i));
+
+@for(DEPARTAMENTO(j):@sum(CARTERAS(i):consumo(i,j)*X(i))<=disponibilidad(j));
+@sum(CARTERAS(i):X(i))<=300;
+

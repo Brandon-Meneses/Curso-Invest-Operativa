@@ -1,0 +1,23 @@
+SETS:
+  PRENDA/1..4/:precio,X;
+  ACTIVIDAD/1..4/:capacidad;
+  PA(PRENDA,ACTIVIDAD):tiempo;
+ENDSETS
+
+DATA:
+  precio = 10 11 12 13;
+  capacidad = 4800 9600 4700 4500;
+  tiempo = 
+    10 20  3  5 
+     9 24  2  5 
+    11 17  3  5 
+     8 26  5  5;
+ENDDATA
+
+MAX = @SUM(PRENDA(i): precio(i)*X(i));
+
+@FOR(ACTIVIDAD(j): @SUM(PRENDA(i): tiempo(i,j)*X(i)) <= capacidad(j));
+[produccion_pantalones] X(2) >= 100;
+[produccion_maxima] @SUM(PRENDA(i): X(i)) <= 500;
+
+END

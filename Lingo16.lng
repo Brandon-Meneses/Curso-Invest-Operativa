@@ -1,0 +1,4 @@
+SETS:
+CABLES/1,2/:pv,X;
+MATERIALES/1..3/:disponibilidad;
+

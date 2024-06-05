@@ -1,0 +1,17 @@
+
+ Ranges in which the basis is unchanged:
+
+                                       Objective Coefficient Ranges:
+
+                                        Current        Allowable        Allowable
+                      Variable      Coefficient         Increase         Decrease
+                            X1         30.00000         10.00000         23.33333
+                            X2         20.00000         70.00000         5.000000
+
+                                           Righthand Side Ranges:
+
+                                        Current        Allowable        Allowable
+                           Row              RHS         Increase         Decrease
+                             2         10.00000         6.000000         7.333333
+                             3         8.000000         22.00000         3.000000
+

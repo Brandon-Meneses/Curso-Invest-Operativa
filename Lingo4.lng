@@ -1,0 +1,20 @@
+!Conjunto y atributos;
+SETS:
+PRODUCTO/1..4/:X,utilidad;
+RECURSO/1..4/:disponibilidad;
+PR(producto,recurso):requerimiento;
+endsets
+!Estructura de datos del problema;
+data:
+Utilidad=40,20,15,30;
+Disponibilidad=400,500,300,100;
+Requerimiento=
+3 2 2 2
+2 3 3 1
+4 1 1 2
+5 2 2 3;
+enddata
+!El modelo;
+Max= @sum(producto(i):utilidad(i)*x(i));
+!La restricción;
+@for(recurso(j):@sum(producto(i):requerimiento(i,j)*x(i))<=disponibilidad(j));       

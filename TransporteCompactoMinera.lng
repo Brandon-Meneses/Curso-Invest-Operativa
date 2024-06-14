@@ -1,0 +1,45 @@
+sets:
+  Cantera /1..3/: Costo, Ceniza, Azufre, Disponibilidad;
+  Cliente /1..2/: Demanda, CenizaMax, AzufreMax;
+  PC(Cantera, Cliente): X;
+endsets
+
+data:
+  Disponibilidad = 120 100 140;
+  Costo = 50 55 62;
+  Ceniza = 8 6 4;
+  Azufre = 5 4 3;
+  Demanda = 130 120;
+  CenizaMax = 7 6;
+  AzufreMax = 7.5 4.5;
+enddata
+
+! Función objetivo: minimizar el costo total de transporte;
+min = @sum(PC(i,j): Costo(i) * X(i,j));
+
+! Restricción de demanda mínima de los clientes;
+@for(Cliente(j):
+  @sum(Cantera(i): X(i,j)) >= Demanda(j)
+);
+
+! Restricción de disponibilidad de las canteras;
+@for(Cantera(i):
+  @sum(Cliente(j): X(i,j)) <= Disponibilidad(i)
+);
+
+! Restricción de contenido máximo de ceniza;
+@for(Cliente(j):
+  @sum(Cantera(i): Ceniza(i) * X(i,j)) <= CenizaMax(j) * @sum(Cantera(i): X(i,j))
+);
+
+! Restricción de contenido máximo de azufre;
+@for(Cliente(j):
+  @sum(Cantera(i): Azufre(i) * X(i,j)) <= AzufreMax(j) * @sum(Cantera(i): X(i,j))
+);
+
+! Restricción de no negatividad;
+@for(PC(i,j):
+  X(i,j) >= 0
+);
+
+end

@@ -1,0 +1,16 @@
+sets:
+Planta/1..3/:capacidad;
+Almacen/1,2/:demanda;
+PA(Planta,Almacen):x,costo;
+endsets
+
+data:
+capacidad = 950 1150 1000;
+demanda = 1200 900;
+costo = 3 2 2 4 3 5;
+enddata
+
+min = @sum(PA(i,j):costo(i,j)*x(i,j));
+
+@for(Planta(i):[cap_planta]@sum(Almacen(j):x(i,j))<=capacidad(i));
+@for(Almacen(j):[dem_alm]@sum(Planta(i):x(i,j))>=demanda(j));

@@ -1,0 +1,20 @@
+sets:
+planta/pla1,pla2/:capacidad_p;
+almacen/alm1,alm2/:capacidad_a;
+mercado/merc1,merc2,merc3/:demanda,precio;
+PA(planta,almacen):costo_transp1,x;
+AM(almacen,mercado):costo_transp2,y;
+endsets
+data:
+capacidad_p=5500 5500;
+capacidad_a=2000 3000;
+demanda=3000 2500 2000;
+precio=45 48 50;
+costo_transp1=5 6  7 5;
+costo_transp2=3 2 3 4 4 3;
+enddata
+max=@sum(AM(j,k):precio(k)*y(j,k))-22*@sum(PA(i,j):x(i,j))-@sum(PA(i,j):costo_transp1(i,j)*x(i,j))-@sum(AM(j,k):costo_transp2(j,k)*y(j,k));
+@for(planta(i):@sum(almacen(j):x(i,j))<=capacidad_p(i));
+@for(almacen(j):@sum(planta(i):x(i,j))<=capacidad_a(j));
+@for(mercado(k):@sum(almacen(j):y(j,k))<=demanda(k));
+@for(almacen(j):@sum(planta(i):x(i,j))=@sum(mercado(k):y(j,k)));

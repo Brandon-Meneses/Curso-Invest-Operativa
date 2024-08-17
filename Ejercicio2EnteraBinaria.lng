@@ -1,0 +1,42 @@
+SETS:
+  PLANTA /1..3/: Capacidad, CFP, b;
+  CENTRO /1..3/: Demanda, CFC, c;
+  PXC(PLANTA,CENTRO): X, CT;
+ENDSETS
+
+DATA:
+  Capacidad = 600 600 600;
+  Demanda = 500 500 500;
+  CFP = 1700 2000 1900;
+  CFC = 500 400 600;
+  CT = 25 30 27
+       27 25 29
+       30 27 26;
+ENDDATA
+
+! Función objetivo: minimizar costos totales;
+MIN = @SUM(PXC(I,J): X(I,J) * CT(I,J)) 
+    + @SUM(PLANTA(I): b(I) * CFP(I)) 
+    + @SUM(CENTRO(J): c(J) * CFC(J));
+
+! Restricciones de capacidad de producción;
+@FOR(PLANTA(I): @SUM(CENTRO(J): X(I,J)) <= Capacidad(I) * b(I));
+
+! Restricciones de demanda;
+@FOR(CENTRO(J):@SUM(PLANTA(I): X(I,J)) >= Demanda(J) * c(J));
+
+! Una planta debe ser cerrada;
+@SUM(PLANTA(I): b(I)) = 2;
+
+! Un centro de distribución debe ser cerrado;
+@SUM(CENTRO(J): c(J)) = 2;
+
+! Variables de decisión binarias;
+@FOR(PLANTA(I): @BIN(b));
+@FOR(CENTRO(J): @BIN(c));
+
+! Variables de decisión enteras;
+@FOR(PXC(I,J): @GIN(X));
+
+END
+

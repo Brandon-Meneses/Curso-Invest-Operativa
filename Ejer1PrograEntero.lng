@@ -1,0 +1,13 @@
+! Definir las variables;
+@GIN(T);
+@GIN(A);
+
+! Función objetivo;
+max = 10*T + 15*A;
+
+! Restricciones;
+282*T + 400*A <= 2000;
+4*T + 40*A <= 140;
+T <= 5;
+
+end

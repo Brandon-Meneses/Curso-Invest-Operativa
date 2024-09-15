@@ -1,0 +1,31 @@
+SETS:
+  SUBESTACION /A..G/: Costo, b;
+  AREA /1..7/: Cubierta;
+  SXA(SUBESTACION, AREA): Matriz;
+ENDSETS
+
+DATA:
+  ! Costos de implementación de las subestaciones;
+  Costo = 200 100 150 300 256 270 180;
+  
+  ! Matriz de cobertura;
+  Matriz = 1 0 0 0 1 0 1
+           1 1 0 0 1 0 1
+           1 0 1 0 1 0 0
+           0 1 0 1 1 0 0
+           0 0 1 1 0 1 0
+           0 0 0 1 1 1 0
+           1 0 0 0 1 1 1;
+ENDDATA
+
+! Función objetivo: minimizar el costo total de implementación;
+MIN = @SUM(SUBESTACION(I): b(I) * Costo(I));
+
+! Restricciones de cobertura: cada área debe ser cubierta al menos por una subestación;
+@FOR(AREA(J):@SUM(SUBESTACION(I): b(I) * Matriz(I,J)) >= 1);
+
+! Variables de decisión binarias;
+@FOR(SUBESTACION(I): @BIN(b));
+
+END
+

@@ -1,0 +1,24 @@
+! Restricciones de las condiciones de las inversiones;
+b2 <= b1;             
+b3 <= b2;
+2*b4<=b1+b2;  
+2*b5+b1+b2<=2;         
+b6+b2+b3 <= 2; 
+2*b7-b2+b3<=1; 
+
+! Restricción del presupuesto total;
+7*b1 + 4*b2 + 8*b3 + 4*b4 + 7*b5 + 5*b6 + 6*b7 <= 30;
+    
+
+! Definir las variables binarias para cada inversión;
+@BIN(b1);
+@BIN(b2);
+@BIN(b3);
+@BIN(b4);
+@BIN(b5);
+@BIN(b6);
+@BIN(b7);
+
+! Definir la función objetivo para maximizar el rendimiento total;
+MAX = 10*b1 + 8*b2 + 11*b3 + 7*b4 + 11*b5 + 8*b6 + 9*b7;
+
